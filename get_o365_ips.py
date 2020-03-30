@@ -12,21 +12,21 @@ def generate_guid():
     return uid
 
 
-def assemble_url(services, IPv6):
+def assemble_url(services, ipv6):
     """Assemble Office365 enpoint query URL for selected services."""
     base_url = "https://endpoints.office.com/endpoints/worldwide"
     guid = generate_guid()
     service_list = ",".join(services)
-    no_ipv6 = str(not IPv6)
+    no_ipv6 = str(not ipv6)
 
     # assemble url
     full_url = f"{base_url}?clientrequestid={guid}&ServiceAreas={service_list}&NoIPV6={no_ipv6}"
     return full_url
 
 
-def get_o365_ips(services, IPv6):
+def get_o365_ips(services, ipv6):
     """Fetch Office365 IP-addresses for selected services."""
-    request_url = assemble_url(services, IPv6)
+    request_url = assemble_url(services, ipv6)
 
     # fetch IPs
     response = requests.get(request_url)
