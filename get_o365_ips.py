@@ -44,7 +44,8 @@ def parse_response(response):
     for entry in response:
         if 'ips' in entry:  # ignore everything that isn't an IP
             ip_list += entry['ips']
-    return ip_list
+    clean_list = (dict.fromkeys(ip_list))  # automatically remove duplicates
+    return clean_list
 
 
 def prefix_to_network(prefix):
@@ -59,6 +60,7 @@ def ip_list_to_object_group(ip_list):
     """Translate IP prefix list to ASA network object-group."""
     object_group = list()
     object_group.append("object-group network o365_addresses")
+    object_group.append("  description Office 365 endpoint addresses")
 
     for ip in ip_list:
         network, mask = prefix_to_network(ip)
